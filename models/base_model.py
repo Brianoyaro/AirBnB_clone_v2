@@ -4,15 +4,13 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from os import getenv
+from os import getenv'%Y-%m-%dT%H:%M:%S.%f'
+format_ = '%Y-%m-%dT%H:%M:%S.%f'
 
 
-"""type_ = getenv('HBNB_TYPE_STORAGE')
-if type_ == 'db':
-    Base = declarative_base()
-else:
-    Base = storage"""
 Base = declarative_base()
+
+
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), nullable=False, unique=True, primary_key=True)
@@ -22,16 +20,24 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
-            from models import storage
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            if 'updated_at' in kwargs.keys():
+                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],format_)
+            else:
+                kwargs['updated_at'] = datetime.now()
+            if 'created_at' in kwargs.keys():
+                kwargs['created_at'] = datetime.strptime(kwargs['created_at'], format_)
+            else:
+                kwargs['created_at'] = datetime.now()
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
+            if 'id' not in kwargs:
+                kwargs['id'] = str(uuid.uuid4())
+            for key, value in kwargs.items():
+                setattr(self, key, value)
             self.__dict__.update(kwargs)
 
     def __str__(self):
@@ -50,8 +56,7 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary.update({'__class__': self.__class__.__name__})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         if "_sa_instance_state" in dictionary:
@@ -60,5 +65,6 @@ class BaseModel:
 
     def delete(self):
         """deletes current instance from storage"""
+        from models import storage
         storage.delete(self)
 

@@ -6,12 +6,13 @@ from sqlalchemy.orm import relationship
 from os import getenv
 
 
-type_ = getenv('HBNB_TYPE_STORAGE')
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
-    if type_ != 'db':
+
+    if getenv("HBNB_TYPE_STORAGE") != 'db':
         name = ""
+
         @property
         def cities(self):
             """returns list of City instances with state_id\

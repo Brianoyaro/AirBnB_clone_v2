@@ -6,11 +6,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
 
 
-type_ = getenv('HBNB_TYPE_STORAGE')
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     __tablename__ = 'users'
-    if type_ != 'db':
+
+    if getenv("HBNB_TYPE_STORAGE") != 'db':
         email = ''
         password = ''
         first_name = ''

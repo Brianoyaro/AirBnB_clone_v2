@@ -5,11 +5,11 @@ from sqlalchemy import Column, ForeignKey, String
 from os import getenv
 
 
-type_ = getenv("HBNB_TYPE_STORAGE")
 class Review(BaseModel, Base):
     """ Review classto store review information """
     __tablename__ = "reviews"
-    if type_ != 'db':
+
+    if getenv("HBNB_TYPE_STORAGE") != 'db':
         place_id = ""
         user_id = ""
         text = ""

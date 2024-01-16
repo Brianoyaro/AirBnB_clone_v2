@@ -28,7 +28,7 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/()'.format(
             user, passwd, host, database), pool_pre_ping=True)
         if environment == 'test':
-            Base.metadata.drop_att(self.__engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """querries current database"""
@@ -63,3 +63,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scope_session(Session)
+
+    def close(self):
+        """closes db session"""
+        self.__session.close()
