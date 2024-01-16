@@ -5,7 +5,7 @@ from os import getenv
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 
 
-type_ = getenv('HBNB_ENV')
+type_ = getenv('HBNB_TYPE_STORAGE')
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"

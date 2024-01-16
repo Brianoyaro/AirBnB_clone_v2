@@ -6,7 +6,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
-type_ = getenv("HBNB_ENV")
+type_ = getenv("HBNB_TYPE_STORAGE")
 class Amenity(BaseModel):
     """amenity class"""
     __tablename__ = "amenities"
