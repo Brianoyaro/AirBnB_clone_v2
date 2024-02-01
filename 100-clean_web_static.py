@@ -58,6 +58,6 @@ def do_clean(number=0):
         number = 1
     # number += 1
     with cd.local('./versions'):
-        local("ls -t | tail -n +number | xargs rm")
+        local("ls -t | tail -n +number | xargs rm --")
     with cd('/data/web_static/releases/'):
-        run("ls -t | tail -n +number | xargs rm")
+        run("ls -t | tail -n +number | xargs rm --")
