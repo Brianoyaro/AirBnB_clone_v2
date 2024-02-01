@@ -19,6 +19,7 @@ def do_pack():
     except:
         return None
 
+
 def do_deploy(archive_path):
     """deployer method"""
     if not os.path.isfile(archive_path):
@@ -40,5 +41,3 @@ def do_deploy(archive_path):
     run(" rm -rf /data/web_static/current")
     run("ln -s {} /data/web_static/current".format(destination))
     return True
-
-
