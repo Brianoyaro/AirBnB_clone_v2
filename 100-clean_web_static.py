@@ -56,7 +56,7 @@ def do_clean(number=0):
     """cleaner function"""
     if number == 0:
         number = 1
-    number += 1
+    # number += 1
     with cd.local('./versions'):
         local("ls -t | tail -n +number | xargs rm")
     with cd('/data/web_static/releases/'):
