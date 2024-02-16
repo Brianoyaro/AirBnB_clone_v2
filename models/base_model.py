@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from os import getenv'%Y-%m-%dT%H:%M:%S.%f'
+from os import getenv
 format_ = '%Y-%m-%dT%H:%M:%S.%f'
 
 
