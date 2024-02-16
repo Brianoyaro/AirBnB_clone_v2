@@ -25,7 +25,7 @@ class BaseModel:
             self.updated_at = datetime.now()
         else:
             if 'updated_at' in kwargs.keys():
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],format_)
+                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'], format_)
             else:
                 kwargs['updated_at'] = datetime.now()
             if 'created_at' in kwargs.keys():
@@ -67,4 +67,3 @@ class BaseModel:
         """deletes current instance from storage"""
         from models import storage
         storage.delete(self)
-

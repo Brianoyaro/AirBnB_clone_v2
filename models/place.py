@@ -53,10 +53,10 @@ class Place(BaseModel, Base):
         description = Column(String(1024), nullable=True)
         number_rooms = Column(Integer, default=0, nullable=False)
         number_bathrooms = Column(Integer, default=0, nullable=False)
-        max_guest = Column(Integer, default=0, nullabl=False)
+        max_guest = Column(Integer, default=0, nullable=False)
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Float, nullable=True)
-        longitude = Column(FLoat, nullable=True)
+        longitude = Column(Float, nullable=True)
         reviews = relationship("Review", cascade="all, delete, delete-orphan", backref="place")
 
         place_amenity = Table(
@@ -64,4 +64,4 @@ class Place(BaseModel, Base):
                 Base.metadata,
                 Column("place_id", String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
                 Column("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False))
-        amenities = Relationship("Amenity", secondary=place_amenity, viewonly=False, backref="places")
+        amenities = relationship("Amenity", secondary=place_amenity, viewonly=False, backref="places")
