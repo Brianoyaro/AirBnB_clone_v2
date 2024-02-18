@@ -8,7 +8,6 @@ from models.states import State
 app = Flask(__name__)
 
 
-
 @app.teardown_appcontext
 def remove():
     """removes current sqlalchemy session"""
